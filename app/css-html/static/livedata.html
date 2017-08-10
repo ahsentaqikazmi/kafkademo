@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ï»¿<!DOCTYPE html>
 <!-- 
 Template Name: Metronic - Responsive Admin Dashboard Template build with Twitter Bootstrap 3.3.6
 Version: 4.5.4
@@ -185,8 +185,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                 <a href="table_datatables_buttons.html" <button class="btn green" type="submit" >Add Sensor</button> </a>
                                  <a href="table_datatables_Temp.html"  <button class="btn green" type="submit" >List Of Sensors</button></a>
                                  <a href="livedata.html"  <button class="btn green" type="submit">Live Data</button></a>
-                  
-                           </h1>
+                        </h1>
                         </div>
                         <!-- END PAGE TITLE -->
                         <!-- BEGIN PAGE TOOLBAR -->
@@ -227,68 +226,6 @@ License: You must have a valid license purchased only from themeforest(the above
                                     <a class="btn red btn-outline" href="http://datatables.net/extensions/buttons/" target="_blank">the official documentation</a>
                                 </p>
                             </div>-->
-
-                                <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-
-    <script>
-        $(function () { // DOM ready
-
-            // ::: TAGS BOX
-
-            $("#tags input").on({
-                focusout: function () {
-                    var txt = this.value.replace(/[^a-z0-9\+\-\.\#]/ig, ''); // allowed characters
-                    if (txt) $("<span/>", { text: txt.toLowerCase(), insertBefore: this });
-                    this.value = "";
-                },
-                keyup: function (ev) {
-                    // if: comma|enter (delimit more keyCodes with | pipe)
-                    if (/(188|13)/.test(ev.which)) $(this).focusout();
-                }
-            });
-            $('#tags').on('click', 'span', function () {
-                if (confirm("Remove " + $(this).text() + "?")) $(this).remove();
-            });
-
-        });
-
-    </script>
-    <style>
-        #tags{
-  float:left;
-  border:1px solid #ccc;
-  padding:5px;
-  font-family:Arial;
-}
-#tags > span{
-  cursor:pointer;
-  display:block;
-  float:left;
-  color:#fff;
-  background:#789;
-  padding:5px;
-  padding-right:25px;
-  margin:4px;
-}
-#tags > span:hover{
-  opacity:0.7;
-}
-#tags > span:after{
- position:absolute;
- content:"×";
- border:1px solid;
- padding:2px 5px;
- margin-left:3px;
- font-size:11px;
-}
-#tags > input{
-  background:#eee;
-  border:0;
-  margin:4px;
-  padding:7px;
-  //width:auto;
-}
-    </style>
                             <div class="row">
                                 <div class="col-md-12">
                                     <!-- BEGIN EXAMPLE TABLE PORTLET-->
@@ -298,95 +235,296 @@ License: You must have a valid license purchased only from themeforest(the above
                                     <div class="portlet box green">
                                         <div class="portlet-title">
                                             <div class="caption">
-                                                <i class="fa fa-globe"></i>Power Factor </div>
+                                                <i class="fa fa-globe"></i>Live Data Sensor </div>
                                             <div class="tools"> </div>
                                         </div>
                                         <div class="portlet-body">
-                                           <div class="row">
-                        <div class="col-md-12 ">
-                            <!-- BEGIN SAMPLE FORM PORTLET-->
-                            <div class="portlet light bordered">
-                                <div class="portlet-title">
-                                    <div class="caption font-red-sunglo">
-                                        <i class="icon-settings font-red-sunglo"></i>
-                                        <span class="caption-subject bold uppercase"> Line Inputs</span>
-                                    </div>
-                                    <div class="actions">
-                                        <div class="btn-group">
-                                            <a class="btn btn-sm green dropdown-toggle" href="javascript:;" data-toggle="dropdown"> Actions
-                                                <i class="fa fa-angle-down"></i>
-                                            </a>
-                                            <ul class="dropdown-menu pull-right">
-                                                <li>
-                                                    <a href="javascript:;">
-                                                        <i class="fa fa-pencil"></i> Edit </a>
-                                                </li>
-                                                <li>
-                                                    <a href="javascript:;">
-                                                        <i class="fa fa-trash-o"></i> Delete </a>
-                                                </li>
-                                                <li>
-                                                    <a href="javascript:;">
-                                                        <i class="fa fa-ban"></i> Ban </a>
-                                                </li>
-                                                <li class="divider"> </li>
-                                                <li>
-                                                    <a href="javascript:;"> Make admin </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-  <label for="form_control_1">Name Of Parameters</label>
-                                <br />
-                                 <div id="tags" class="col-md-12">
- 
-  <input type="text" value="" placeholder="Add a tag" class="form-control" id="Text8" />
+                                            <script>
+                                                $(document).ready(function () {
+                                                    $.getJSON(http://wt.ops.few.vu.nl/api/-------,
+                                                    function (json) {
+                                                        var tr;
+                                                        for (var i = 0; i < json.length; i++) {
+                                                            tr = $('<tr/>');
+                                                            tr.append("<td>" + json[i].Name + "</td>");
+                                                           
+                                                          
+                                                            $('#table').append(tr);
+                                                        }
+                                                    });
+                                                });
 
-                                      <!-- <label for="form_control_1">Name Of Parameters</label>-->
-</div>
-                                <div class="portlet-body form">
-                                  
-                                      
-                                             <div class="form-group form-md-line-input has-info">
-                                                <input type="text" class="form-control" id="Text6" placeholder="Info state">
-                                                <label for="form_control_1">Name</label>
-                                            </div>
-                                            <div class="form-group form-md-line-input has-info">
-                                                <input type="text" class="form-control" id="Text1" placeholder="Info state">
-                                                <label for="form_control_1">Url</label>
-                                            </div>
-                                             <div class="form-group form-md-line-input has-info">
-                                                <input type="text" class="form-control" id="Text2" placeholder="Info state">
-                                                <label for="form_control_1">Number Of Parameters</label>
-                                            </div>
-                                         
-                                         <!--   <div class="form-group form-md-line-input has-info">
-                                                <input type="text" class="form-control" id="Text3" placeholder="Info state">
-                                                <label for="form_control_1">Name Of Parameters</label>
-                                            </div>-->
-                                             <div class="form-group form-md-line-input has-info">
-                                                <input type="text" class="form-control" id="Text4" placeholder="Info state">
-                                                <label for="form_control_1">End Points</label>
-                                            </div>
+</script>
+
+<table id= "table" class="table table-striped table-bordered table-hover">
+
+ 
+ 
+  
+    
+
+
+
+  
+
+</table>
+                                            <script>
+                                                function submitRowAsForm(idRow) {
+                                                    form = document.createElement("form"); // CREATE A NEW FORM TO DUMP ELEMENTS INTO FOR SUBMISSION
+                                                    form.method = "post"; // CHOOSE FORM SUBMISSION METHOD, "GET" OR "POST"
+                                                    form.action = ""; // TELL THE FORM WHAT PAGE TO SUBMIT TO
+                                                    $("#"+idRow+" td").children().each(function() { // GRAB ALL CHILD ELEMENTS OF <TD>'S IN THE ROW IDENTIFIED BY idRow, CLONE THEM, AND DUMP THEM IN OUR FORM
+                                                        if(this.type.substring(0,6) == "select") { // JQUERY DOESN'T CLONE <SELECT> ELEMENTS PROPERLY, SO HANDLE THAT
+                                                            input = document.createElement("input"); // CREATE AN ELEMENT TO COPY VALUES TO
+                                                            input.type = "hidden";
+                                                            input.name = this.name; // GIVE ELEMENT SAME NAME AS THE <SELECT>
+                                                            input.value = this.value; // ASSIGN THE VALUE FROM THE <SELECT>
+                                                            form.appendChild(input);
+                                                        } else { // IF IT'S NOT A SELECT ELEMENT, JUST CLONE IT.
+                                                            $(this).clone().appendTo(form);
+                                                        }
+
+                                                    });
+                                                    form.submit(); // NOW SUBMIT THE FORM THAT WE'VE JUST CREATED AND POPULATED
+                                                }
+</script>
                                            
-                                            
-                                        
-                                        <div class="form-actions noborder">
-                                            <button type="button" class="btn blue">Submit</button>
-                                            <button type="button" class="btn default">Cancel</button>
-                                        </div>
-                                  
-                                    
-                                </div>
-                            </div>
-                            <!-- END SAMPLE FORM PORTLET-->
-                            <!-- BEGIN SAMPLE FORM PORTLET-->
-                          
-                            <!-- END SAMPLE FORM PORTLET-->
-                        </div>
-                      
-                                            </div>
+                                            <!--<table class="table table-striped table-bordered table-hover" id="sample_2">
+                                                <thead>
+                                                    <tr>
+                                                        <th> Unix Time Stamp </th>
+                                                        <th> Values </th>
+                                                        <th> Qualities </th>
+                                                        
+                                                    </tr>
+                                               <tbody>
+											  <tr>
+						<td>1499084174000</td>
+						<td>49.99</td>
+						<td>3</td>
+					</tr>
+					<tr>
+						<td>1499084183000</td>
+						<td>49.99</td>
+						<td>3</td>
+					</tr>
+					<tr>
+						<td>1499084193000</td>
+						<td>49.98</td>
+						<td>3</td>
+					</tr>
+					<tr>
+						<td>1499084203000</td>
+						<td>49.98</td>
+						<td>3</td>
+					</tr>
+					<tr>
+						<td>1499084212000</td>
+						<td>49.98</td>
+						<td>3</td>
+					</tr>
+					<tr>
+						<td>1499084222000</td>
+						<td>49.98</td>
+						<td>3</td>
+					</tr>
+					
+					<tr>
+						<td>1499087557000</td>
+						<td>49.96</td>
+						<td>3</td>
+					</tr>
+					<tr>
+						<td>1499087567000</td>
+						<td>49.96</td>
+						<td>3</td>
+					</tr>
+					<tr>
+						<td>1499087576000</td>
+						<td>49.96</td>
+						<td>3</td>
+					</tr>
+					<tr>
+						<td>1499087585000</td>
+						<td>49.96</td>
+						<td>3</td>
+					</tr>
+					<tr>
+						<td>1499087595000</td>
+						<td>49.96</td>
+						<td>3</td>
+					</tr>
+					<tr>
+						<td>1499087604000</td>
+						<td>49.96</td>
+						<td>3</td>
+					</tr>
+					<tr>
+						<td>1499087614000</td>
+						<td>49.96</td>
+						<td>3</td>
+					</tr>
+					<tr>
+						<td>1499087623000</td>
+						<td>49.96</td>
+						<td>3</td>
+					</tr>
+					<tr>
+						<td>1499087632000</td>
+						<td>49.96</td>
+						<td>3</td>
+					</tr>
+					<tr>
+						<td>1499087642000</td>
+						<td>49.96</td>
+						<td>3</td>
+					</tr>
+					<tr>
+						<td>1499087651000</td>
+						<td>49.96</td>
+						<td>3</td>
+					</tr>
+					<tr>
+						<td>1499087661000</td>
+						<td>49.97</td>
+						<td>3</td>
+					</tr>
+					<tr>
+						<td>1499087670000</td>
+						<td>49.97</td>
+						<td>3</td>
+					</tr>
+					<tr>
+						<td>1499087680000</td>
+						<td>49.97</td>
+						<td>3</td>
+					</tr>
+					<tr>
+						<td>1499087689000</td>
+						<td>49.97</td>
+						<td>3</td>
+					</tr>
+					<tr>
+						<td>1499087699000</td>
+						<td>49.97</td>
+						<td>3</td>
+					</tr>
+					<tr>
+						<td>1499087709000</td>
+						<td>49.97</td>
+						<td>3</td>
+					</tr>
+					<tr>
+						<td>1499087718000</td>
+						<td>49.97</td>
+						<td>3</td>
+					</tr>
+					<tr>
+						<td>1499087728000</td>
+						<td>49.97</td>
+						<td>3</td>
+					</tr>
+					<tr>
+						<td>1499087737000</td>
+						<td>49.96</td>
+						<td>3</td>
+					</tr>
+					<tr>
+						<td>1499087747000</td>
+						<td>49.97</td>
+						<td>3</td>
+					</tr>
+					<tr>
+						<td>1499087756000</td>
+						<td>49.96</td>
+						<td>3</td>
+					</tr>
+					<tr>
+						<td>1499087766000</td>
+						<td>49.96</td>
+						<td>3</td>
+					</tr>
+					<tr>
+						<td>1499087775000</td>
+						<td>49.96</td>
+						<td>3</td>
+					</tr>
+					<tr>
+						<td>1499087785000</td>
+						<td>49.97</td>
+						<td>3</td>
+					</tr>
+					<tr>
+						<td>1499087794000</td>
+						<td>49.97</td>
+						<td>3</td>
+					</tr>
+					<tr>
+						<td>1499087803000</td>
+						<td>49.97</td>
+						<td>3</td>
+					</tr>
+					<tr>
+						<td>1499087813000</td>
+						<td>49.97</td>
+						<td>3</td>
+					</tr>
+					<tr>
+						<td>1499087823000</td>
+						<td>49.97</td>
+						<td>3</td>
+					</tr>
+					<tr>
+						<td>1499087832000</td>
+						<td>49.97</td>
+						<td>3</td>
+					</tr>
+					<tr>
+						<td>1499087841000</td>
+						<td>49.97</td>
+						<td>3</td>
+					</tr>
+					<tr>
+						<td>1499087851000</td>
+						<td>49.97</td>
+						<td>3</td>
+					</tr>
+					<tr>
+						<td>1499087861000</td>
+						<td>49.97</td>
+						<td>3</td>
+					</tr>
+					<tr>
+						<td>1499087871000</td>
+						<td>49.97</td>
+						<td>3</td>
+					</tr>
+					<tr>
+						<td>1499087881000</td>
+						<td>49.97</td>
+						<td>3</td>
+					</tr>
+					<tr>
+						<td>1499087890000</td>
+						<td>49.97</td>
+						<td>3</td>
+					</tr>
+					<tr>
+						<td>1499087900000</td>
+						<td>49.96</td>
+						<td>3</td>
+					</tr>
+					<tr>
+						<td>1499087909000</td>
+						<td>49.96</td>
+						<td>3</td>
+					</tr>
+											  </tbody>
+                                                </thead>
+                                              
+											  
+				</tbody>
+                                            </table>-->
                                         </div>
                                     </div>
                                     <!-- END EXAMPLE TABLE PORTLET-->

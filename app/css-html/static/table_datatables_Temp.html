@@ -184,7 +184,7 @@ License: You must have a valid license purchased only from themeforest(the above
                             
                                  <a href="table_datatables_buttons.html" <button class="btn green" type="submit" >Add Sensor</button> </a>
                                  <a href="table_datatables_Temp.html"  <button class="btn green" type="submit" >List Of Sensors</button></a>
-                                 <!--<a href="table_datatables_IRM.html"  <button class="btn green" type="submit">IRMS</button></a>-->
+                                 <a href="livedata.html"  <button class="btn green" type="submit">Live Data</button></a>
                               
                            </h1>
                         </div>
@@ -251,7 +251,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                                             tr.append("<td>" + json[i].Url + "</td>");
                                                             tr.append("<td>" + json[i].Nameofparameter + "</td>");
                                                             tr.append("<td>" + json[i].endpoints + "</td>");
-                                                           
+                                                            tr.append("<td>" + json[i].button + "</td>");
                                                             $('#table').append(tr);
                                                         }
                                                     });
@@ -260,34 +260,77 @@ License: You must have a valid license purchased only from themeforest(the above
 </script>
 
 <table id= "table" class="table table-striped table-bordered table-hover">
-  <tr>
+
+  <tr id="idrow1">
     <th> Name</th>
     <th> Url</th>
     <th> Name Of Parameters</th>
     <th> End Points</th>
+       <th> </th>
   </tr>
-  <tr>
-    <td> </td>
-    <td> </td>
-    <td> </td>
-    <td> </td>
+  <tr id="idrow2">
    
+    <td> </td>
+    <td> </td>
+    <td> </td>
+    <td> <select id="myoptions">
+
+</select> </td>
+   <td><button onclick="submitRowAsForm('idrow')">Get</button></td>
   </tr>
-  <tr>
-    <td> </td>
-    <td> </td>
-    <td> </td>
-    <td> </td>
     
+
+  <tr id="idrow3">
+    <td> </td>
+    <td> </td>
+    <td> </td>
+    <td> <select id="Select1">
+
+</select> </td>
+   <td><button onclick="submitRowAsForm('idrow')">Get</button></td>
   </tr>
   <tr>
     <td> </td>
     <td> </td>
     <td> </td>
-    <td> </td> 
-        
+    <td> <select id="Select2">
+
+</select> </td>
+   <td><button onclick="submitRowAsForm('idrow3)">Get</button></td>
   </tr>
 </table>
+                                            <script>
+                                                function submitRowAsForm(idRow) {
+                                                    form = document.createElement("form"); // CREATE A NEW FORM TO DUMP ELEMENTS INTO FOR SUBMISSION
+                                                    form.method = "post"; // CHOOSE FORM SUBMISSION METHOD, "GET" OR "POST"
+                                                    form.action = ""; // TELL THE FORM WHAT PAGE TO SUBMIT TO
+                                                    $("#"+idRow+" td").children().each(function() { // GRAB ALL CHILD ELEMENTS OF <TD>'S IN THE ROW IDENTIFIED BY idRow, CLONE THEM, AND DUMP THEM IN OUR FORM
+                                                        if(this.type.substring(0,6) == "select") { // JQUERY DOESN'T CLONE <SELECT> ELEMENTS PROPERLY, SO HANDLE THAT
+                                                            input = document.createElement("input"); // CREATE AN ELEMENT TO COPY VALUES TO
+                                                            input.type = "hidden";
+                                                            input.name = this.name; // GIVE ELEMENT SAME NAME AS THE <SELECT>
+                                                            input.value = this.value; // ASSIGN THE VALUE FROM THE <SELECT>
+                                                            form.appendChild(input);
+                                                        } else { // IF IT'S NOT A SELECT ELEMENT, JUST CLONE IT.
+                                                            $(this).clone().appendTo(form);
+                                                        }
+
+                                                    });
+                                                    form.submit(); // NOW SUBMIT THE FORM THAT WE'VE JUST CREATED AND POPULATED
+                                                }
+</script>
+                                             <script type="text/javascript">
+
+                                                 var x = json[i].endpoints;
+
+                                                 var options = x.split(",");
+
+                                                 var select = document.getElementById('myoptions');
+                                                 for(var i=0; i<options.length; i++)
+                                                 {
+                                                     select.options[i] = new Option(options[i], i);  //new Option("Text", "Value")
+                                                 }
+    </script>
                                             <!--<table class="table table-striped table-bordered table-hover" id="sample_2">
                                                 <thead>
                                                     <tr>
