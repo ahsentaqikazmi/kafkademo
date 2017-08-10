@@ -51,11 +51,11 @@ def kafkaProducer(request):
 	kafka = KafkaClient('127.0.0.1:9092')
 	producer = SimpleProducer(kafka, async=True)
 	group_name = "SensorData"
-	topic_name = "test" #request.POST.get('name')
-	#url = request.POST.get('url')
-	#endpoint = request.POST.get('endpoint')
-	#resp = urllib2.urlopen(url+endpoint)
-	#data = resp.read()
+	topic_name = request.POST.get('name')
+	url = request.POST.get('url')
+	endpoint = request.POST.get('endpoint')
+	resp = urllib2.urlopen(url+endpoint)
+	data = resp.read()
 	
 	#url += endpoint
 	#req = urllib.request.Request(url)
@@ -73,19 +73,19 @@ def kafkaProducer(request):
 	# 	print msg
 	#  	producer.send_messages(topic_name, msg)
 	#  	print msg + '\n'
-	producer.send_messages(topic_name, "this is sensor data1")
-	producer.send_messages(topic_name, "this is sensor data2")
-	producer.send_messages(topic_name, "this is sensor data3")
+	#producer.send_messages(topic_name, "this is sensor data1")
+	#producer.send_messages(topic_name, "this is sensor data2")
+	producer.send_messages(topic_name, data)
 	producer.stop()
-	print "worked producer"
-	return HttpResponse('All Okay')
+	print "producer worked"
+	return HttpResponse('data inserted in Pipeline')
 	#return HttpResponse('BUZZZER')
 
 def kafkaConsumer(request):
 	if request.method == 'GET':
 		'
-		group_name = "my-group"
-		topic_name = "test"#request.POST.get('name')
+		group_name = "SensorData"
+		topic_name = request.POST.get('name')
 		print 'topic'
 		kafka = KafkaClient('127.0.0.1:9092')
 		consumer = SimpleConsumer(kafka, group_name, topic_name, iter_timeout=10)
