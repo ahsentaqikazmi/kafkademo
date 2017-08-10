@@ -12,7 +12,7 @@ import simplejson as js
 import psycopg2
 from app.models import SensorInfo
 from app.forms import SensorForm
-import urllib.request
+import urllib2
 #from uploads.core.forms import DocumentForm
 
 #New Sensor template
@@ -51,41 +51,57 @@ def kafkaProducer(request):
 	kafka = KafkaClient('127.0.0.1:9092')
 	producer = SimpleProducer(kafka, async=True)
 	group_name = "SensorData"
-	topic_name = request.POST.get('name')
-	url = request.POST.get('url')
-	endpoint = request.POST.get('endpoint')
-	url += endpoint
-	req = urllib.request.Request(url)
-	with urllib.request.urlopen(req) as response:
-	data = response.read()
+	topic_name = "test" #request.POST.get('name')
+	#url = request.POST.get('url')
+	#endpoint = request.POST.get('endpoint')
+	#resp = urllib2.urlopen(url+endpoint)
+	#data = resp.read()
+	
+	#url += endpoint
+	#req = urllib.request.Request(url)
+	#with urllib.request.urlopen(req) as response:
+	#data = response.read()
+	
 	print "sending messages to group: [%s] and topic: [%s]" % (group_name, topic_name)
 	
-	# url ='https://raw.githubusercontent.com/caroljmcdonald/mapr-streams-sparkstreaming-hbase/master/data/sensordata.csv'
-	data = pd.read_csv(url)
-	#for i in range(len(data)):    
-	#	msg = str(data.iloc[[i]]).split('\n')[1]
-	producer.send_messages(topic_name, data)
-	#	print msg + '\n'
+	#url1 ='https://raw.githubusercontent.com/caroljmcdonald/mapr-streams-sparkstreaming-hbase/master/data/sensordata.csv'
+	#data = pd.read_csv(url1)
+	#print 'before loop'
+	# for i in range(len(data)):    
+	#  	print 'msg'
+	#  	msg = str(data.iloc[[i]]).split('\n')[1]
+	# 	print msg
+	#  	producer.send_messages(topic_name, msg)
+	#  	print msg + '\n'
+	producer.send_messages(topic_name, "this is sensor data1")
+	producer.send_messages(topic_name, "this is sensor data2")
+	producer.send_messages(topic_name, "this is sensor data3")
 	producer.stop()
 	print "worked producer"
 	return HttpResponse('All Okay')
-	# return HttpResponse('BUZZZER')
+	#return HttpResponse('BUZZZER')
 
 def kafkaConsumer(request):
 	if request.method == 'GET':
-		print 'SOHAIBBBB'
+		'
 		group_name = "my-group"
-		topic_name = "fast-messages"
+		topic_name = "test"#request.POST.get('name')
 		print 'topic'
 		kafka = KafkaClient('127.0.0.1:9092')
-		consumer = SimpleConsumer(kafka, group_name, topic_name)
-		print 'consuler'
+		consumer = SimpleConsumer(kafka, group_name, topic_name, iter_timeout=10)
+		
 		print "Created consumer for group: [%s] and topic: [%s]" % (group_name, topic_name)
 		print "Waiting for messages..."
 		print 'streaming odp'
+		data = []
+		#data.append(consumer.get_message())
+		
 		for msg in consumer:
-			# time.sleep(5)
-			print msg.message.value
-			#return HttpResponse(msg.message.value)
-	return HttpResponse('Consumer nahi chal raha')
+			
+		  	print msg.message.value
+		  	data.append(msg.message.value)
+		 	
+		
+		resp = js.dumps(data)
+	return HttpResponse(resp)
 

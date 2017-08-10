@@ -10,9 +10,9 @@ urlpatterns = [
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^index/', views.index, name='index'),
-    url(r'^abc/', views.kafkaProducer, name='producer'),
+    url(r'^producer/', views.kafkaProducer, name='producer'),
     url(r'^getdata/', views.kafkaConsumer, name='consumer'),
     url(r'^addsensor/', views.addSensor, name='addsensor'),
-    url(r'^sensorlist/', views.getAllSensors, name='sensorlist'),
+    url(r'^sensorlist/', views.getAllSensors, name='sensorlist')
     
 ]
