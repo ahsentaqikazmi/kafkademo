@@ -30,9 +30,13 @@ from django.http import JsonResponse
 
 #from uploads.core.forms import DocumentForm
 
+def sensorList(request):
+	return render(request , 'table_datatables_Temp.html' )
+	
 #New Sensor template
+
 def index(request):
-	return render(request, 'index.html')
+	return render(request, 'table_datatables_buttons.html')
 
 
 #adding new sensor

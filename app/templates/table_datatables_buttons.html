@@ -177,7 +177,7 @@
                         <div class="page-title">
                            <h1 class="custom-style">Sensor Data                          
                               <a href="table_datatables_buttons.html" <button class="btn green" type="submit" >Add Sensor</button> </a>
-                              <a href="table_datatables_Temp.html"  <button class="btn green" type="submit" >List Of Sensors</button></a>
+                              <a href="/sensorpage/"  <button class="btn green" type="submit" >List Of Sensors</button></a>
                               <a href="livedata.html"  <button class="btn green" type="submit">Live Data</button></a>
                            </h1>
                         </div>
@@ -295,7 +295,7 @@
                                        <div class="row">
                                           <div class="col-md-12 ">
                                              <!-- BEGIN SAMPLE FORM PORTLET-->
-											 <form id="Form1" action="http://127.0.0.1:8001/test/" method="post">
+											 <form id="Form1" action="/addsensor/" method="post">
                                              <div class="portlet light bordered">
                                                 <div class="portlet-title">
                                                    <div class="caption font-red-sunglo">
@@ -330,7 +330,7 @@
                                                 </div>
                                                 <label for="form_control_1">Name Of Parameters</label>
                                                 <br />
-                                                <input type="text" name="namesofparams" >
+                                                <input type="text" name="namesofparams" id = "namesofparams" >
                                                 <!--<div id="tags" class="col-md-12">
                                                    <input type="text" name="namesofparams" value="a , b " placeholder="Add a tag" class="form-control" id="Text8" />
                                                    <!-- <label for="form_control_1">Name Of Parameters</label>-->
@@ -353,7 +353,7 @@
                                                       <label for="form_control_1">Name Of Parameters</label>
                                                       </div>-->
                                                    <div class="form-group form-md-line-input has-info">
-                                                      <input type="text"  name="endpoints" class="form-control" id="Text4" placeholder="Info state">
+                                                      <input type="text"  name="endpoints" class="form-control" id="endpoints" placeholder="Info state">
                                                       <label for="form_control_1">End Points</label>
                                                    </div>
                                                    <div class="form-actions noborder">
@@ -1025,25 +1025,44 @@
             </div>
 			<script>
 					var frm = $('#Form1');
+frm.submit(function(e) {
+    if (!validate()) {
+        return false;
+    }
+    e.preventDefault();
+    $.ajax( {
+        type: frm.attr('method'),
+        url: frm.attr('action'),
+        data: frm.serialize(),
+        success: function(data) {
+            console.log('Submission was successful.');
+            console.log(data);
+        },
+        error: function(data) {
+            console.log('An error occurred.');
+            console.log(data);
+        },
+    });
+});
 
-					frm.submit(function (e) {
-
-					e.preventDefault();
-
-					$.ajax({
-						type: frm.attr('method'),
-						url: frm.attr('action'),
-						data: frm.serialize(),
-						success: function (data) {
-							console.log('Submission was successful.');
-							console.log(data);
-						},
-						error: function (data) {
-							console.log('An error occurred.');
-							console.log(data);
-						},
-					});
-				});
+function validate() {
+    var ele = document.getElementById('namesofparams').value;
+    var ele2 = document.getElementById('endpoints').value;
+    var flag = false;
+    var arr = ele.split(" ");
+    var arr2 = ele2.split(" ");
+    if (arr.length > 1) {
+        alert("please enter comma separated value for parameters' names");
+    } else {
+        if(arr2.length > 1){
+            alert("please enter comma separated value for end points");
+        }else{
+            flag = true;
+            console.log("correct formate")
+        }
+    }
+    return flag;
+}
 			</script>
             <!-- END INNER FOOTER -->
             <!-- END FOOTER -->

@@ -46,7 +46,10 @@ License: You must have a valid license purchased only from themeforest(the above
         <link href="../assets/layouts/layout3/css/themes/default.min.css" rel="stylesheet" type="text/css" id="style_color" />
         <link href="../assets/layouts/layout3/css/custom.min.css" rel="stylesheet" type="text/css" />
         <!-- END THEME LAYOUT STYLES -->
-        <link rel="shortcut icon" href="favicon.ico" /> </head>
+        <link rel="shortcut icon" href="favicon.ico" />
+         <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous" type="text/javascript"></script> </head>
     <!-- END HEAD -->
       <style type="text/css">
         .mega-menu-submenu li a{
@@ -242,34 +245,44 @@ License: You must have a valid license purchased only from themeforest(the above
                                         <div class="portlet-body">
                                             <script>
                                                 $(document).ready(function () {
-                                                    $.getJSON("http://127.0.0.1:8000/sensorlist/",
+                                                    $.getJSON("http://localhost:8000/sensorlist/",
                                                     function (json) {
                                                         console.log(json)
                                                         var tr;
                                                         for (var i = 0; i < json.length; i++) {
                                                             tr = $('<tr/>');
-                                                            tr.append("<td>" + json[i].Name + "</td>");
-                                                            tr.append("<td>" + json[i].Url + "</td>");
-                                                            tr.append("<td>" + json[i].Nameofparameter + "</td>");
-                                                            tr.append("<td>" + json[i].endpoints + "</td>");
-                                                            tr.append("<td>" + json[i].button + "</td>");
+                                                            tr.id=i;
+                                                            tr.append("<td id="+i+"_name>" + json[i].name + "</td>");
+                                                            tr.append("<td id="+i+"_url>" + json[i].url + "</td>");
+                                                            tr.append("<td id="+i+"_namesofparams>" + json[i].namesofparams + "</td>");
+                                                            tr.append("<td>" + getDropDown(json[i].endpoints, i) + "</td>");
+                                                            tr.append('<td><button onclick="submitRowAsForm('+i+')">Get</button></td>');
                                                             $('#table').append(tr);
                                                         }
                                                     });
                                                 });
+                                                function getDropDown(param, index){
+                                                    console.log("param is:  ", param);
+                                                    var endpoints = param.trim().split(',');
+                                                    var options = "";
+                                                    for(var j=0; j < endpoints.length; j++){
+                                                        options +="<option value="+endpoints[j].split('/')[0]+">"+endpoints[j].split('/')[0]+"</option>";
+                                                    }
+                                                    return '<select id='+index+'_select>'+options+'</select>'; 
+                                                }                            
 
 </script>
 
-<table id= "table" class="table table-striped table-bordered table-hover">
+<table id= "table" style="width:60%" class="table table-striped table-bordered table-hover">
 
-  <tr id="idrow1">
+  <tr id="idrow1" style="text-align:left">
     <th> Name</th>
     <th> Url</th>
     <th> Name Of Parameters</th>
     <th> End Points</th>
        <th> </th>
   </tr>
-  <tr id="idrow2">
+<!--  <tr id="idrow2">
    
     <td> </td>
     <td> </td>
@@ -278,45 +291,21 @@ License: You must have a valid license purchased only from themeforest(the above
 
 </select> </td>
    <td><button onclick="submitRowAsForm('idrow')">Get</button></td>
-  </tr>
+  </tr>-->
     
 
-  <tr id="idrow3">
-    <td> </td>
-    <td> </td>
-    <td> </td>
-    <td> <select id="Select1">
-
-</select> </td>
-   <td><button onclick="submitRowAsForm('idrow')">Get</button></td>
-  </tr>
-  <tr>
-    <td> </td>
-    <td> </td>
-    <td> </td>
-    <td> <select id="Select2">
-
-</select> </td>
-   <td><button onclick="submitRowAsForm('idrow3)">Get</button></td>
-  </tr>
 </table>
-                                            <script>
+        <script>
                                                 function submitRowAsForm(idRow) {
                                                     form = document.createElement("form"); // CREATE A NEW FORM TO DUMP ELEMENTS INTO FOR SUBMISSION
                                                     form.method = "post"; // CHOOSE FORM SUBMISSION METHOD, "GET" OR "POST"
-                                                    form.action = ""; // TELL THE FORM WHAT PAGE TO SUBMIT TO
-                                                    $("#"+idRow+" td").children().each(function() { // GRAB ALL CHILD ELEMENTS OF <TD>'S IN THE ROW IDENTIFIED BY idRow, CLONE THEM, AND DUMP THEM IN OUR FORM
-                                                        if(this.type.substring(0,6) == "select") { // JQUERY DOESN'T CLONE <SELECT> ELEMENTS PROPERLY, SO HANDLE THAT
-                                                            input = document.createElement("input"); // CREATE AN ELEMENT TO COPY VALUES TO
-                                                            input.type = "hidden";
-                                                            input.name = this.name; // GIVE ELEMENT SAME NAME AS THE <SELECT>
-                                                            input.value = this.value; // ASSIGN THE VALUE FROM THE <SELECT>
-                                                            form.appendChild(input);
-                                                        } else { // IF IT'S NOT A SELECT ELEMENT, JUST CLONE IT.
-                                                            $(this).clone().appendTo(form);
-                                                        }
-
-                                                    });
+                                                    form.action = "http//localhost:8000/"+$("#"+idRow+"_select option:selected").val(); // TELL THE FORM WHAT PAGE TO SUBMIT TO
+                                                    $('#'+idRow+'_name').clone().attr("id", "name").appendTo(form);
+                                                    $('#'+idRow+'_url').clone().attr("id", "url").appendTo(form);
+                                                    $('#'+idRow+'_namesofparams').clone().attr("id", "namesofparams").appendTo(form);
+                                                    $(form).append('<input type="text" id="myoptions" value='+$('#'+idRow+'_select option:selected').val()+' />');
+                                                    $(document.body).append(form);
+                                                    console.log(form);
                                                     form.submit(); // NOW SUBMIT THE FORM THAT WE'VE JUST CREATED AND POPULATED
                                                 }
 </script>
@@ -1220,7 +1209,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <script src="../assets/global/plugins/excanvas.min.js"></script> 
 <![endif]-->
         <!-- BEGIN CORE PLUGINS -->
-        <script src="../assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+       
         <script src="../assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
         <script src="../assets/global/plugins/js.cookie.min.js" type="text/javascript"></script>
         <script src="../assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
